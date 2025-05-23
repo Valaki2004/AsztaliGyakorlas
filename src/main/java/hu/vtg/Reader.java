@@ -14,7 +14,7 @@ public class Reader {
     public ArrayList<Create> readFile() throws IOException {
         ArrayList<Create> list = new ArrayList<>();
         File file = new File("src/main/java/File/restauralasok.csv");
-        try(Scanner sc = new Scanner(file, StandardCharsets.UTF_8)) {
+        try(Scanner sc = new Scanner(file)) {
             sc.nextLine();
             while(sc.hasNext()){
                 String line = sc.nextLine();

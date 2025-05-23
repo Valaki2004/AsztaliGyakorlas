@@ -3,8 +3,11 @@ package hu.vtg;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,7 +16,7 @@ public class Reader {
     public ArrayList<Create> readFile() throws IOException {
         ArrayList<Create> list = new ArrayList<>();
         File file = new File("src/main/java/File/restauralasok.csv");
-        try(Scanner sc = new Scanner(file)) {
+        try(Scanner sc = new Scanner(file, StandardCharsets.UTF_8)) {
             sc.nextLine();
             while(sc.hasNext()){
                 String line = sc.nextLine();
@@ -34,10 +37,12 @@ public class Reader {
         return list;
     }
     public void FileWiriter(ArrayList<Create> createlist) {
-        try (FileWriter fw = new FileWriter("src/main/java/File/restauralasok.csv")) {
-            fw.write("id;paintingid;datum;muvelet;megjegyzes\n");
+            try (Writer writer = new OutputStreamWriter(
+                new FileOutputStream("src/main/java/File/restauralasok.csv"),
+                StandardCharsets.UTF_8)) {
+            writer.write("id;paintingid;datum;muvelet;megjegyzes\n");
             for (Create create : createlist) {
-                fw.write(
+                writer.write(
                     create.getId() + ";" +
                     create.getPaintingid() + ";" +
                     create.getDatum() + ";" +
